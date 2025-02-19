@@ -1,0 +1,28 @@
+# Histogram for AirPassengers dataset in R
+
+# Load dataset
+data("AirPassengers")
+
+# Create histogram
+hist(AirPassengers, breaks=seq(100, 700, by=150), 
+     main="Histogram of AirPassengers", 
+     xlab="Number of Passengers", 
+     col="lightblue", border="black")
+
+grid()
+
+# Multiple lines in Line Chart using a single plot function in R
+
+data(mtcars)
+
+# Create plot
+plot(mtcars$mpg, type="l", col="blue", lwd=2, 
+     xlab="Index", ylab="Values", 
+     main="Multiple Lines: mpg & qsec")
+
+# Add second line
+lines(mtcars$qsec, col="red", lwd=2)
+
+# Add legend
+legend("topright", legend=c("mpg", "qsec"), 
+       col=c("blue", "red"), lwd=2)
