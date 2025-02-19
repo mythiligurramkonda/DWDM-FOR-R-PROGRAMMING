@@ -1,36 +1,20 @@
-#include <stdio.h>
+# Compute approximate median in R
 
-int find_median(int intervals[][2], int frequencies[], int size) {
-    int cumulative_frequencies[size];
-    cumulative_frequencies[0] = frequencies[0];
-    int N = frequencies[0];
-    
-    for (int i = 1; i < size; i++) {
-        cumulative_frequencies[i] = cumulative_frequencies[i - 1] + frequencies[i];
-        N += frequencies[i];
-    }
-    
-    int median_class_index = 0;
-    while (cumulative_frequencies[median_class_index] < N / 2) {
-        median_class_index++;
-    }
-    
-    int L = intervals[median_class_index][0];
-    int F = (median_class_index > 0) ? cumulative_frequencies[median_class_index - 1] : 0;
-    int f = frequencies[median_class_index];
-    int h = intervals[median_class_index][1] - intervals[median_class_index][0];
-    
-    double median = L + ((N / 2.0 - F) / f) * h;
-    return median;
-}
+# Given data
+intervals <- list(c(1, 5), c(5, 15), c(15, 20), c(20, 50), c(50, 80), c(80, 110))
+frequencies <- c(200, 450, 300, 1500, 700, 44)
 
-int main() {
-    int intervals[][2] = {{1, 5}, {5, 15}, {15, 20}, {20, 50}, {50, 80}, {80, 110}};
-    int frequencies[] = {200, 450, 300, 1500, 700, 44};
-    int size = sizeof(frequencies) / sizeof(frequencies[0]);
-    
-    double median_value = find_median(intervals, frequencies, size);
-    printf("Approximate Median: %.2f\n", median_value);
-    
-    return 0;
-}
+# Compute cumulative frequencies
+cumulative_frequencies <- cumsum(frequencies)
+N <- sum(frequencies)
+
+# Find median class
+median_class_index <- which(cumulative_frequencies >= N/2)[1]
+L <- intervals[[median_class_index]][1]  # Lower boundary of median class
+F <- ifelse(median_class_index > 1, cumulative_frequencies[median_class_index - 1], 0)  # Cumulative freq before median class
+f <- frequencies[median_class_index]  # Frequency of median class
+h <- intervals[[median_class_index]][2] - intervals[[median_class_index]][1]  # Class width
+
+# Compute approximate median
+median_value <- L + ((N/2 - F) / f) * h
+cat("Approximate Median:", median_value, "\n")
