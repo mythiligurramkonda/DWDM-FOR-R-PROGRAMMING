@@ -1,0 +1,15 @@
+# Load dataset
+data(mtcars)
+
+# Define x-axis (car indices)
+x_values <- 1:nrow(mtcars)
+
+# Define y-values (mpg and qsec)
+y_values <- cbind(mtcars$mpg, mtcars$qsec)
+
+# Plot multiple lines
+matplot(x_values, y_values, type = "l", lty = 1, col = c("blue", "red"),
+        xlab = "Car Index", ylab = "Values", main = "MPG and QSEC in mtcars")
+
+# Add legend
+legend("topright", legend = c("MPG", "QSEC"), col = c("blue", "red"), lty = 1)
