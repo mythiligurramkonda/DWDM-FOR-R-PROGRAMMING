@@ -1,0 +1,12 @@
+# Histogram for AirPassengers dataset in R
+
+# Load dataset
+data("AirPassengers")
+
+# Create histogram
+hist(AirPassengers, breaks=seq(100, 700, by=150), 
+     main="Histogram of AirPassengers", 
+     xlab="Number of Passengers", 
+     col="lightblue", border="black")
+
+grid()
