@@ -1,0 +1,36 @@
+#include <stdio.h>
+
+int find_median(int intervals[][2], int frequencies[], int size) {
+    int cumulative_frequencies[size];
+    cumulative_frequencies[0] = frequencies[0];
+    int N = frequencies[0];
+    
+    for (int i = 1; i < size; i++) {
+        cumulative_frequencies[i] = cumulative_frequencies[i - 1] + frequencies[i];
+        N += frequencies[i];
+    }
+    
+    int median_class_index = 0;
+    while (cumulative_frequencies[median_class_index] < N / 2) {
+        median_class_index++;
+    }
+    
+    int L = intervals[median_class_index][0];
+    int F = (median_class_index > 0) ? cumulative_frequencies[median_class_index - 1] : 0;
+    int f = frequencies[median_class_index];
+    int h = intervals[median_class_index][1] - intervals[median_class_index][0];
+    
+    double median = L + ((N / 2.0 - F) / f) * h;
+    return median;
+}
+
+int main() {
+    int intervals[][2] = {{1, 5}, {5, 15}, {15, 20}, {20, 50}, {50, 80}, {80, 110}};
+    int frequencies[] = {200, 450, 300, 1500, 700, 44};
+    int size = sizeof(frequencies) / sizeof(frequencies[0]);
+    
+    double median_value = find_median(intervals, frequencies, size);
+    printf("Approximate Median: %.2f\n", median_value);
+    
+    return 0;
+}
